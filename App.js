@@ -3,12 +3,14 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 
 import AppContainer from "./src/navigation/AppStackNavigation";
+import TabAppContainer from "./src/navigation/AppTabNavigation";
 
 class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <AppContainer />
+        {/* <AppContainer /> */}
+        <TabAppContainer/>
       </View>
     );
   }
