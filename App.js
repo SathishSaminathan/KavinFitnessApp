@@ -4,13 +4,15 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 
 import AppContainer from "./src/navigation/AppStackNavigation";
 import TabAppContainer from "./src/navigation/AppTabNavigation";
+import MaterialBottomContainer from "./src/navigation/AppMaterialBottomTabNavigator";
 
 class App extends Component {
   render() {
     return (
       <View style={styles.container}>
         {/* <AppContainer /> */}
-        <TabAppContainer/>
+        {/* <TabAppContainer/> */}
+        <MaterialBottomContainer/>
       </View>
     );
   }
