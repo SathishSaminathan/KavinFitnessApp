@@ -18,8 +18,8 @@ export default class Home extends Component {
       >
         <Text> Home </Text>
         <Button
-          title="Go to Profile"
-          onPress={() => this.props.navigation.navigate("Profile")}
+          title="Go to Videos"
+          onPress={() => this.props.navigation.navigate("Videos")}
         />
       </View>
     );
