@@ -6,7 +6,7 @@ import Icons from "react-native-vector-icons/Ionicons";
 import { Colors, Icon } from "../assets/styleConstant";
 
 import Home from "../screens/Home";
-import Videos from "../screens/Videos";
+import Videos from "../screens/Videos/Videos";
 
 const AppMaterialBottomTabNavigator = createMaterialBottomTabNavigator(
   {
@@ -30,7 +30,7 @@ const AppMaterialBottomTabNavigator = createMaterialBottomTabNavigator(
     }
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Videos",
     // order: ["Profile", "Home"],
     activeTintColor: Colors.themeGreen,
     inactiveTintColor: Colors.darkGrey,
