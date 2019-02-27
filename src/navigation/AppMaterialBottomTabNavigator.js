@@ -13,7 +13,7 @@ const AppMaterialBottomTabNavigator = createMaterialBottomTabNavigator(
     Home: {
       screen: Home,
       navigationOptions: {
-        tabBarLabel: "Homes",
+        tabBarLabel: "Home",
         tabBarIcon: ({ tintColor }) => (
           <Icons color={tintColor} name="ios-home" size={30} />
         )
@@ -30,7 +30,7 @@ const AppMaterialBottomTabNavigator = createMaterialBottomTabNavigator(
     }
   },
   {
-    initialRouteName: "Videos",
+    initialRouteName: "Home",
     // order: ["Profile", "Home"],
     activeTintColor: Colors.themeGreen,
     inactiveTintColor: Colors.darkGrey,

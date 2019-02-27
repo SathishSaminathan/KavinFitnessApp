@@ -1,18 +1,23 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View, StatusBar } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 
 import AppContainer from "./src/navigation/AppStackNavigation";
 import TabAppContainer from "./src/navigation/AppTabNavigation";
 import MaterialBottomContainer from "./src/navigation/AppMaterialBottomTabNavigator";
+import Colors from "./src/assets/styleConstant/Colors";
 
 class App extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar
+          backgroundColor={Colors.themeGreen}
+          barStyle="dark-content"
+        />
         {/* <AppContainer /> */}
         {/* <TabAppContainer/> */}
-        <MaterialBottomContainer/>
+        <MaterialBottomContainer />
       </View>
     );
   }

@@ -24,7 +24,7 @@ export default class VideoItems extends Component {
               style={{ height: 50, width: 50, borderRadius: 25 }}
             />
             <View style={styles.videoDetails}>
-              <Text style={styles.videoTitle}>{video.snippet.title}</Text>
+              <Text numberOfLines={2} style={styles.videoTitle}>{video.snippet.title}</Text>
               {/* <Text>{video.snippet.channelTitle}</Text> */}
             </View>
           </View>
