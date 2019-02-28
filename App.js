@@ -15,9 +15,9 @@ class App extends Component {
           backgroundColor={Colors.themeGreen}
           barStyle="dark-content"
         />
-        {/* <AppContainer /> */}
+        <AppContainer />
         {/* <TabAppContainer/> */}
-        <MaterialBottomContainer />
+        {/* <MaterialBottomContainer /> */}
       </View>
     );
   }

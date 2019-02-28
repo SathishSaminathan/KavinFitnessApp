@@ -1,6 +1,15 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Dimensions, Image } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Image,
+  Animated,
+  Text,
+  TouchableOpacity
+} from "react-native";
+import MapView, { Polyline, Callout, Marker } from "react-native-maps";
+import PolyLine from "@mapbox/polyline";
 
 import Colors from "../../assets/styleConstant/Colors";
 import MapStyle from "./MapStyle.json";
@@ -21,8 +30,17 @@ class KMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      region: null
+      region: null,
+      pointCoords: [],
+      animated: new Animated.Value(0)
     };
+
+    Animated.loop(
+      Animated.timing(this.state.animated, {
+        toValue: 1,
+        duration: 1000
+      })
+    ).start();
   }
 
   componentDidMount() {
@@ -38,7 +56,8 @@ class KMap extends Component {
             }
           },
           () => {
-            this.findMe();
+            // this.findMe(),
+            this.getRouteDirection("40.1884979, 29.061018", "41.0082,28.9784");
           }
         );
       },
@@ -61,21 +80,48 @@ class KMap extends Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
+  async getRouteDirection(startLoc, destinationLoc) {
+    console.log("working..");
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${destinationLoc}&key=AIzaSyBXuJC8eQtu7Jd76iXcltsPGSgeGh7LMRQ`
+      );
+      const responseJson = await response.json();
+      console.log("responseJson", responseJson);
+      const points = PolyLine.decode(
+        responseJson.routes[0].overview_polyline.points
+      );
+      const pointCoords = points.map(point => {
+        return {
+          latitude: point[0],
+          longitude: point[1]
+        };
+      });
+      this.setState({ pointCoords }, console.log("pointCoords", pointCoords));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   findMe = () => {
     _mapView.animateToRegion(this.state.region, 3000);
   };
 
   render() {
-    const { region } = this.state;
+    const { region, pointCoords, animated } = this.state;
     const { GymMarkers } = this.props;
 
+    // const scaleAnimation = animated.interpolate({
+    //   inputRange: [0, 1],
+    //   outputRange: [0, 1]
+    // });
+
     return (
-      <View style={styles.container}>
+      <View style={[styles.container]}>
         <MapView
           ref={mapView => {
             _mapView = mapView;
           }}
-          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
           style={styles.map}
           customMapStyle={MapStyle}
           // showsUserLocation={true}
@@ -87,12 +133,32 @@ class KMap extends Component {
             <MapView.Marker coordinate={this.state.region}>
               <View
                 style={{
-                  width: MAP_USER_IMAGE_WIDTH,
-                  height: MAP_USER_IMAGE_HEIGHT,
-                  borderRadius: MAP_USER_IMAGE_HEIGHT / 2,
-                  backgroundColor: Colors.themeGreen
+                  position: "relative",
+                  flex: 1,
+                  width: MAP_USER_IMAGE_WIDTH + 10,
+                  height: MAP_USER_IMAGE_HEIGHT + 10,
+                  borderRadius: (MAP_USER_IMAGE_HEIGHT + 10) / 2,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: Colors.darkGrey,
+                  borderWidth: 2,
+                  borderColor: Colors.themeGreen
                 }}
               >
+                <Animated.View
+                  style={[
+                    {
+                      width: MAP_USER_IMAGE_WIDTH + 10,
+                      height: MAP_USER_IMAGE_HEIGHT + 10,
+                      borderRadius: (MAP_USER_IMAGE_HEIGHT + 10) / 2,
+                      backgroundColor: Colors.white,
+                      borderWidth: 2,
+                      position: "absolute",
+                      zIndex: -1
+                    },
+                    { transform: [{ scale: animated }] }
+                  ]}
+                />
                 <View
                   style={{
                     width: MAP_USER_IMAGE_WIDTH,
@@ -100,7 +166,8 @@ class KMap extends Component {
                     borderRadius: MAP_USER_IMAGE_HEIGHT / 2,
                     overflow: "hidden",
                     borderWidth: 1,
-                    borderColor: Colors.themeGreen
+                    // borderColor: Colors.themeGreen,
+                    zIndex: 1
                   }}
                 >
                   <Image
@@ -120,8 +187,9 @@ class KMap extends Component {
             </MapView.Marker>
           )}
           {GymMarkers &&
-            GymMarkers.map(point => (
-              <MapView.Marker
+            GymMarkers.map((point, i) => (
+              <Marker
+                key={i}
                 coordinate={{
                   latitude: point.latitude,
                   longitude: point.longitude
@@ -140,7 +208,52 @@ class KMap extends Component {
                     resizeMode="cover"
                   />
                 </View>
-              </MapView.Marker>
+                <Callout
+                  tooltip
+                  style={{
+                    width: 300,
+                    height: 140,
+                  }}
+                >
+                  <View
+                    style={{
+                      minWidth: 100,
+                      maxWidth: 800,
+                      backgroundColor: Colors.themeGreen,
+                      borderRadius: 20,
+                      padding: 10,
+                      overflow: "hidden"
+                    }}
+                  >
+                    <View>
+                      <Text style={{ fontSize: 17, color: Colors.white }}>
+                        <Text style={{ fontSize: 23 }}>W</Text>elcome to Kavin
+                        Fitness..
+                      </Text>
+                      <View>
+                        <Text style={{ fontSize: 20, color: Colors.white }}>{`${
+                          point.Area
+                        }`}</Text>
+                      </View>
+                      <Text>
+                        Are you ready for..
+                        <Text
+                          style={{
+                            fontSize: 20,
+                            color: Colors.white,
+                            marginLeft: 20
+                          }}
+                        >
+                          change?
+                        </Text>
+                      </Text>
+                      <Text style={{ fontSize: 20, color: Colors.white }}>
+                        Click to contact your Trainer..
+                      </Text>
+                    </View>
+                  </View>
+                </Callout>
+              </Marker>
             ))}
         </MapView>
       </View>

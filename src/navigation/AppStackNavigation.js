@@ -12,7 +12,7 @@ const AppStackNavigator = createStackNavigator(
     Videos:Videos
   },
   {
-    initialRouteName:'Login',
+    initialRouteName:'Home',
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: "orange"
