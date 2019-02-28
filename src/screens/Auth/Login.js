@@ -125,6 +125,7 @@ class Login extends Component {
             <View style={styles.mobileNumberArea}>
               <Text style={styles.numberText}>I can contact you through</Text>
               <TextInput
+                placeholder="8012941249"
                 keyboardType="number-pad"
                 style={[styles.textInput, { width: "45%" }]}
                 underlineColorAndroid={Colors.themeGreen}
@@ -172,7 +173,8 @@ const styles = StyleSheet.create({
     borderColor: Colors.themeGreen,
     overflow: "hidden",
     marginTop: MARGIN_TOP,
-    marginLeft: MARGIN_LEFT
+    marginLeft: MARGIN_LEFT,
+    marginLeft: width / 2 - LOGIN_CONTAINER_WIDTH / 2
   },
   genderSelectionArea: {
     flex: 20
@@ -181,7 +183,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-around"
-    // backgroundColor: "red"
   },
   genderImage: {
     width: 80,
@@ -205,7 +206,6 @@ const styles = StyleSheet.create({
     height: null
   },
   inputArea: {
-    // backgroundColor:'red',
     flex: 80,
     paddingTop: 10
   },
@@ -217,14 +217,12 @@ const styles = StyleSheet.create({
   numberText: { color: Colors.themeGreen, fontSize: 20 },
   buttonArea: {
     position: "absolute",
-    // position:'absolute',
     bottom: 0,
     borderTopWidth: 3,
     borderColor: Colors.themeGreen
   },
   textInput: { color: Colors.white, width: "75%", fontSize: 20 },
   mobileNumberArea: {
-    // backgroundColor:'red'
     paddingHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
