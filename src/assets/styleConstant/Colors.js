@@ -6,6 +6,7 @@ const Colors = {
   disabledIcon: "#8E8E93",
   disabledButton: "#C7C7CC",
   white: "#bdbdbd",
+  pureWhite:'#e4e4e4',
   green: "#4CD964",
   lightgrey: "#EFEFF4",
   darkGrey: "#424242",

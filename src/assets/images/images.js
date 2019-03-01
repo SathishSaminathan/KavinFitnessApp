@@ -5,6 +5,7 @@ const images = {
   Female: require("./female.png"),
   FemaleSelected: require("./femaleselected.png"),
   GymMarker:require('./gymmarker.png'),
+  Arrow:require('./arrow.png'),
 };
 
 export default images;
