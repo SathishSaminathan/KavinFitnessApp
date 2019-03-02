@@ -136,7 +136,13 @@ class Login extends Component {
           </View>
           <View style={styles.buttonArea} underlayColor="red">
             <TouchableOpacity style={styles.button}>
-              <Text style={{ color: Colors.themeGreen, fontSize: 20 }}>
+              <Text
+                style={{
+                  color: Colors.themeGreen,
+                  fontSize: 20,
+                  fontFamily: "Graduate"
+                }}
+              >
                 Are you ready to Lift?
               </Text>
             </TouchableOpacity>

@@ -59,6 +59,10 @@
 		05AA6371E5D5435D9468F87A /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6CF3C382CCD84418B9687573 /* Zocial.ttf */; };
 		73BB142CDD144B509D2E7450 /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30EB15A0F05D4CCE92E15E84 /* libRNCWebView.a */; };
 		C0CFD5E9C19640CDBB5DB231 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B273CAF54624C83A9948D73 /* libAirMaps.a */; };
+		C6576476CA234798A8C51282 /* Graduate-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD882A5C9593477D96AB6183 /* Graduate-Regular.ttf */; };
+		C0C0B34F015E44969BA79483 /* vincHand.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 436030E1280B4801B64E3580 /* vincHand.ttf */; };
+		2A915765857D4769B4BD2EF3 /* vincHand.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24190D6280214CDB8025631D /* vincHand.ttf */; };
+		A576FD932C994151AF2F0DEC /* Graduate.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5954E2290DB748BAB08B5371 /* Graduate.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -390,6 +394,10 @@
 		30EB15A0F05D4CCE92E15E84 /* libRNCWebView.a */ = {isa = PBXFileReference; name = "libRNCWebView.a"; path = "libRNCWebView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		2FD9317D14CD48C28696484D /* AirMaps.xcodeproj */ = {isa = PBXFileReference; name = "AirMaps.xcodeproj"; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		0B273CAF54624C83A9948D73 /* libAirMaps.a */ = {isa = PBXFileReference; name = "libAirMaps.a"; path = "libAirMaps.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		BD882A5C9593477D96AB6183 /* Graduate-Regular.ttf */ = {isa = PBXFileReference; name = "Graduate-Regular.ttf"; path = "../src/assets/fonts/Graduate-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		436030E1280B4801B64E3580 /* vincHand.ttf */ = {isa = PBXFileReference; name = "vincHand.ttf"; path = "../src/assets/fonts/vincHand.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		24190D6280214CDB8025631D /* vincHand.ttf */ = {isa = PBXFileReference; name = "vincHand.ttf"; path = "../assets/fonts/vincHand.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5954E2290DB748BAB08B5371 /* Graduate.ttf */ = {isa = PBXFileReference; name = "Graduate.ttf"; path = "../src/assets/fonts/Graduate.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -682,6 +690,10 @@
 				A8BBE670228B4C3A866E3D69 /* Octicons.ttf */,
 				85BAB62F8E104EFA9CE2540E /* SimpleLineIcons.ttf */,
 				6CF3C382CCD84418B9687573 /* Zocial.ttf */,
+				BD882A5C9593477D96AB6183 /* Graduate-Regular.ttf */,
+				436030E1280B4801B64E3580 /* vincHand.ttf */,
+				24190D6280214CDB8025631D /* vincHand.ttf */,
+				5954E2290DB748BAB08B5371 /* Graduate.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1148,6 +1160,10 @@
 				FE017FE400444F619A8B5768 /* Octicons.ttf in Resources */,
 				FD14BA85457541518A6DA739 /* SimpleLineIcons.ttf in Resources */,
 				05AA6371E5D5435D9468F87A /* Zocial.ttf in Resources */,
+				C6576476CA234798A8C51282 /* Graduate-Regular.ttf in Resources */,
+				C0C0B34F015E44969BA79483 /* vincHand.ttf in Resources */,
+				2A915765857D4769B4BD2EF3 /* vincHand.ttf in Resources */,
+				A576FD932C994151AF2F0DEC /* Graduate.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
