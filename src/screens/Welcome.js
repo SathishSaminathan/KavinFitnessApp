@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity
 } from "react-native";
-import * as Animatable from 'react-native-animatable';  
+import * as Animatable from "react-native-animatable";
 
 import { Colors } from "../assets/styleConstant";
 import images from "../assets/images/images";
@@ -27,9 +27,19 @@ class Welcome extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.titleArea}>
-          <Animatable.Text animation="bounceInUp" style={styles.titleText}>Kavin Fitness-</Animatable.Text>
-          <Animatable.Text animation="bounceInUp" style={styles.titleText}>Gym</Animatable.Text>
+        <View style={[styles.titleArea]}>
+          <Animatable.Text
+            animation="bounceInUp"
+            style={[styles.titleText, styles.textStyle]}
+          >
+            Kavin Fitness-
+          </Animatable.Text>
+          <Animatable.Text
+            animation="bounceInUp"
+            style={[styles.titleText, styles.textStyle]}
+          >
+            Gym
+          </Animatable.Text>
         </View>
         <View style={styles.infoArea}>
           <View style={styles.imageArea}>
@@ -40,12 +50,20 @@ class Welcome extends Component {
                 source={images.Arrow}
               />
             </View>
-            <Animatable.Text animation="fadeInLeft" style={styles.nameText}>Enter Your details in Next Page</Animatable.Text>
+            <Animatable.Text
+              animation="fadeInLeft"
+              style={[styles.nameText, styles.textStyle,{width:'100%'}]}
+            >
+              Enter Your details in Next Page
+            </Animatable.Text>
           </View>
-          <Animatable.Text animation="fadeInLeft" style={{ color: Colors.pureWhite, lineHeight: 30 }}>
+          <Animatable.Text
+            animation="fadeInLeft"
+            style={[{ lineHeight: 30 }, styles.textStyle]}
+          >
             Join the movement and change your Life
           </Animatable.Text>
-          <Animatable.Text animation="fadeInLeft" style={{ color: Colors.pureWhite }}>
+          <Animatable.Text animation="fadeInLeft" style={styles.textStyle}>
             The Pain You Feel Today Will Be The Strength You Need Tomorrow
           </Animatable.Text>
         </View>
@@ -57,21 +75,32 @@ class Welcome extends Component {
           />
         </View>
         <View style={{ position: "absolute", left: 20, bottom: 20 }}>
-          <Animatable.Text animation="bounceInLeft" style={{ color: Colors.pureWhite, fontSize: 18 }}>
+          <Animatable.Text
+            animation="bounceInLeft"
+            style={[
+              {
+                fontSize: 18
+              },
+              styles.textStyle
+            ]}
+          >
             Are you Ready to go?
           </Animatable.Text>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("Login")}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Animatable.Text animation="bounceInLeft"
-                style={{
-                  lineHeight: 30,
-                  color: Colors.pureWhite,
-                  borderBottomWidth: 2,
-                  borderBottomColor: Colors.pureWhite,
-                  fontSize: 18
-                }}
+              <Animatable.Text
+                animation="bounceInLeft"
+                style={[
+                  {
+                    lineHeight: 30,
+                    borderBottomWidth: 2,
+                    borderBottomColor: Colors.pureWhite,
+                    fontSize: 18
+                  },
+                  styles.textStyle
+                ]}
               >
                 Sign In
               </Animatable.Text>
@@ -93,19 +122,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.themeGreen,
     paddingHorizontal: 20,
-    position: "relative"
+    position: "relative",
   },
   titleArea: {
-    // width: width - width / 3,
     paddingTop: 20
   },
   titleText: {
-    color: Colors.pureWhite,
-    fontSize: 40,
-    fontWeight: "bold"
+    fontSize: 35
+    // fontWeight: "bold",
   },
   infoArea: {
-    paddingTop: 40
+    paddingTop: 40,
   },
   logoImage: {
     width: 300,
@@ -122,13 +149,16 @@ const styles = StyleSheet.create({
     height: 20
   },
   nameText: {
-    color: Colors.pureWhite,
-    fontSize: 18,
+    fontSize: 14,
     paddingLeft: 10
   },
   image: {
     flex: 1,
     width: null,
     height: null
+  },
+  textStyle: {
+    fontFamily: "Graduate",
+    color: Colors.pureWhite
   }
 });
