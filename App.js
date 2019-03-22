@@ -7,7 +7,7 @@ import {
   StatusBar,
   PermissionsAndroid
 } from "react-native";
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import SplashScreen from "react-native-splash-screen";
 
 import AppContainer from "./src/navigation/AppStackNavigation";
 import TabAppContainer from "./src/navigation/AppTabNavigation";
@@ -23,7 +23,7 @@ class App extends Component {
     this.requestLocationPermission();
   }
 
-  async requestLocationPermission () {
+  async requestLocationPermission() {
     try {
       granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -32,20 +32,24 @@ class App extends Component {
           message: "Example App access to your location "
         }
       );
-      console.log("Granted...",granted)
+      console.log("Granted...", granted);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        this.setState({ Granted: true },()=>console.log(this.state.Granted));
+        this.setState({ Granted: true }, () => console.log(this.state.Granted));
+        SplashScreen.hide();
       } else {
-        this.setState({ Granted: false },()=>console.log(this.state.Granted));
+        this.setState({ Granted: false }, () =>
+          console.log(this.state.Granted)
+        );
       }
     } catch (err) {
       console.warn(err);
     }
-  };
+  }
+
+  componentDidMount() {}
 
   render() {
-
-    const {Granted} = this.state;
+    const { Granted } = this.state;
 
     return (
       <View style={styles.container}>
@@ -53,11 +57,7 @@ class App extends Component {
           backgroundColor={Colors.themeGreen}
           barStyle="dark-content"
         />
-        {Granted ? (
-          <MaterialBottomContainer />
-        ) : (
-          <KPageLoader />
-        )}
+        {Granted ? <MaterialBottomContainer /> : <KPageLoader />}
         {/* <TabAppContainer/> */}
         {/* <MaterialBottomContainer /> */}
       </View>
