@@ -1,50 +1,86 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
+import React, { Component } from "react";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  PermissionsAndroid
+} from "react-native";
+import { createStackNavigator, createAppContainer } from "react-navigation";
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import AppContainer from "./src/navigation/AppStackNavigation";
+import TabAppContainer from "./src/navigation/AppTabNavigation";
+import MaterialBottomContainer from "./src/navigation/AppMaterialBottomTabNavigator";
+import Colors from "./src/assets/styleConstant/Colors";
+import KPageLoader from "./src/components/KPageLoader";
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+class App extends Component {
+  state = {
+    Granted: false
+  };
+  componentWillMount() {
+    this.requestLocationPermission();
+  }
 
-type Props = {};
-export default class App extends Component<Props> {
+  async requestLocationPermission () {
+    try {
+      granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: "Example App",
+          message: "Example App access to your location "
+        }
+      );
+      console.log("Granted...",granted)
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        this.setState({ Granted: true },()=>console.log(this.state.Granted));
+      } else {
+        this.setState({ Granted: false },()=>console.log(this.state.Granted));
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   render() {
+
+    const {Granted} = this.state;
+
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <StatusBar
+          backgroundColor={Colors.themeGreen}
+          barStyle="dark-content"
+        />
+        {Granted ? (
+          <MaterialBottomContainer />
+        ) : (
+          <KPageLoader />
+        )}
+        {/* <TabAppContainer/> */}
+        {/* <MaterialBottomContainer /> */}
       </View>
     );
   }
 }
+export default App;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    justifyContent: "center",
+    // alignItems: "center",
+    backgroundColor: "lightblue"
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+    textAlign: "center",
+    margin: 10
   },
   instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    textAlign: "center",
+    color: "#333333",
+    marginBottom: 5
+  }
 });
