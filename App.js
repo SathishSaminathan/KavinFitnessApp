@@ -1,21 +1,63 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, StatusBar } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  PermissionsAndroid
+} from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 
 import AppContainer from "./src/navigation/AppStackNavigation";
 import TabAppContainer from "./src/navigation/AppTabNavigation";
 import MaterialBottomContainer from "./src/navigation/AppMaterialBottomTabNavigator";
 import Colors from "./src/assets/styleConstant/Colors";
+import KPageLoader from "./src/components/KPageLoader";
 
 class App extends Component {
+  state = {
+    Granted: false
+  };
+  componentWillMount() {
+    this.requestLocationPermission();
+  }
+
+  async requestLocationPermission () {
+    try {
+      granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: "Example App",
+          message: "Example App access to your location "
+        }
+      );
+      console.log("Granted...",granted)
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        this.setState({ Granted: true },()=>console.log(this.state.Granted));
+      } else {
+        this.setState({ Granted: false },()=>console.log(this.state.Granted));
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   render() {
+
+    const {Granted} = this.state;
+
     return (
       <View style={styles.container}>
         <StatusBar
           backgroundColor={Colors.themeGreen}
           barStyle="dark-content"
         />
-        <AppContainer />
+        {Granted ? (
+          <MaterialBottomContainer />
+        ) : (
+          <KPageLoader />
+        )}
         {/* <TabAppContainer/> */}
         {/* <MaterialBottomContainer /> */}
       </View>

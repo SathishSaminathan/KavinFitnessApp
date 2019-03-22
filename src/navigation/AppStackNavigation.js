@@ -4,6 +4,7 @@ import Profile from "../screens/Profile";
 import Videos from "../screens/Videos/Videos";
 import Login from "../screens/Auth/Login";
 import Welcome from "../screens/Welcome";
+import GymPackages from "../screens/GymPackages";
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -11,10 +12,11 @@ const AppStackNavigator = createStackNavigator(
     Login: Login,
     Home: Home,
     Profile: Profile,
-    Videos: Videos
+    Videos: Videos,
+    GymPackages:GymPackages
   },
   {
-    initialRouteName: "Welcome",
+    initialRouteName: "Home",
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: "orange"

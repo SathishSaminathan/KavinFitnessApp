@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import MapView, { Polyline, Callout, Marker } from "react-native-maps";
 import PolyLine from "@mapbox/polyline";
+import Icons from "react-native-vector-icons/FontAwesome";
 
 import Colors from "../../assets/styleConstant/Colors";
 import MapStyle from "./MapStyle.json";
@@ -32,7 +33,9 @@ class KMap extends Component {
     this.state = {
       region: null,
       pointCoords: [],
-      animated: new Animated.Value(0)
+      animated: new Animated.Value(0),
+      initialLocate: true,
+      locationFetched: false
     };
 
     Animated.loop(
@@ -41,9 +44,24 @@ class KMap extends Component {
         duration: 1000
       })
     ).start();
+    let promise = new Promise(resolve => {
+      let t = setInterval(() => {
+        this.getCurrentPosition();
+      }, 3000);
+      resolve();
+    });
   }
 
   componentDidMount() {
+    // this.findMe();
+    setTimeout(() => {
+      this.setState({
+        locationFetched: true
+      });
+    }, 5000);
+  }
+
+  getCurrentPosition = () => {
     navigator.geolocation.getCurrentPosition(
       position => {
         this.setState(
@@ -56,8 +74,8 @@ class KMap extends Component {
             }
           },
           () => {
-            // this.findMe(),
-            this.getRouteDirection("40.1884979, 29.061018", "41.0082,28.9784");
+            this.state.initialLocate ? this.findMe() : null;
+            // this.getRouteDirection("40.1884979, 29.061018", "41.0082,28.9784");
           }
         );
       },
@@ -65,16 +83,19 @@ class KMap extends Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
     this.watchID = navigator.geolocation.watchPosition(position => {
-      this.setState({
-        region: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: LATITUDE_DELTA,
-          longitudeDelta: LONGITUDE_DELTA
-        }
-      });
+      this.setState(
+        {
+          region: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA
+          }
+        },
+        () => console.log("hhh")
+      );
     });
-  }
+  };
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
@@ -104,12 +125,37 @@ class KMap extends Component {
   }
 
   findMe = () => {
+    this.setState(() => {
+      return {
+        initialLocate: false
+      };
+    });
     _mapView.animateToRegion(this.state.region, 3000);
   };
 
+  getDistance = (lat1, lon1, lat2, lon2) => {
+    var radlat1 = (Math.PI * lat1) / 180;
+    var radlat2 = (Math.PI * lat2) / 180;
+    var theta = lon1 - lon2;
+    var radtheta = (Math.PI * theta) / 180;
+    var dist =
+      Math.sin(radlat1) * Math.sin(radlat2) +
+      Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    if (dist > 1) {
+      dist = 1;
+    }
+    dist = Math.acos(dist);
+    dist = (dist * 180) / Math.PI;
+    dist = dist * 60 * 1.1515;
+    dist = dist * 1.609344;
+    return dist.toFixed(1);
+  };
+
   render() {
-    const { region, pointCoords, animated } = this.state;
+    const { region, pointCoords, animated, locationFetched } = this.state;
     const { GymMarkers } = this.props;
+
+    console.log("current location...", this.state.region);
 
     // const scaleAnimation = animated.interpolate({
     //   inputRange: [0, 1],
@@ -212,7 +258,7 @@ class KMap extends Component {
                   tooltip
                   style={{
                     width: 300,
-                    height: 140,
+                    height: 140
                   }}
                 >
                   <View
@@ -230,10 +276,60 @@ class KMap extends Component {
                         <Text style={{ fontSize: 23 }}>W</Text>elcome to Kavin
                         Fitness..
                       </Text>
-                      <View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "flex-start"
+                        }}
+                      >
                         <Text style={{ fontSize: 20, color: Colors.white }}>{`${
                           point.Area
                         }`}</Text>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            paddingLeft: 10,
+                            alignSelf: "flex-end"
+                          }}
+                        >
+                          <Icons
+                            name="map-marker"
+                            style={{
+                              fontSize: 18,
+                              color: Colors.pureWhite
+                            }}
+                          />
+                          <View
+                            style={{
+                              flexDirection: "row"
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 15,
+                                color: Colors.pureWhite,
+                                paddingLeft: 2
+                              }}
+                            >
+                              {this.getDistance(
+                                this.state.region && this.state.region.latitude,
+                                this.state.region &&
+                                  this.state.region.longitude,
+                                point.latitude,
+                                point.longitude
+                              )}
+                              <Text
+                                style={{
+                                  fontSize: 10,
+                                  color: Colors.pureWhite,
+                                  paddingLeft: 1
+                                }}
+                              >
+                                kms
+                              </Text>
+                            </Text>
+                          </View>
+                        </View>
                       </View>
                       <Text>
                         Are you ready for..
@@ -256,6 +352,32 @@ class KMap extends Component {
               </Marker>
             ))}
         </MapView>
+        {!region && (
+          <View
+            style={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              opacity: 0.8,
+              backgroundColor: Colors.themeGreen
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                color: Colors.pureWhite,
+                fontFamily: "Graduate"
+              }}
+            >
+              Fetchinggg... your location
+            </Text>
+          </View>
+        )}
       </View>
     );
   }
